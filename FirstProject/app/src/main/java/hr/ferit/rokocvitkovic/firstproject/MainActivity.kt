@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -38,6 +39,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
+import hr.ferit.rokocvitkovic.firstproject.ui.theme.ScheduleScreen
+import hr.ferit.rokocvitkovic.firstproject.ui.theme.ScheduleViewModel
 import hr.ferit.rokocvitkovic.firstproject.ui.theme.TeamViewModel
 
 
@@ -276,12 +279,7 @@ fun BottomNavigationButton(
 
 
 
-@Composable
-fun ScheduleScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "Prikaz Rasporeda", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-    }
-}
+
 
 @Composable
 fun ResultsScreen() {
