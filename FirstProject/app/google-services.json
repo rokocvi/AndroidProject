@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838164913735",
+    "project_id": "klakar-361ad",
+    "storage_bucket": "klakar-361ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838164913735:android:8932acb1b8c2dacdff5b62",
+        "android_client_info": {
+          "package_name": "hr.ferit.rokocvitkovic.firstproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZufsnn5f3WL2jgxDeOrudb_AZ4QWk4OI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
