@@ -1,7 +1,5 @@
 package hr.ferit.rokocvitkovic.firstproject.ui.theme
 
-
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -32,11 +30,11 @@ fun PlayersScreen(viewModel: PlayerViewModel) {
     var selectedFilter by remember { mutableStateOf("Sve") }
     val filters: List<String> = listOf("Sve", "Strijelci", "Asistenti", "Minutaža")
 
-    // Redosled pozicija
+
     val positionOrder = listOf("Golman", "Obrana", "Vezni", "Napadač")
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Filter UI
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,7 +55,7 @@ fun PlayersScreen(viewModel: PlayerViewModel) {
             )
         }
 
-        // Filtriranje igrača prema odabranom filteru
+
         val filteredPlayers: List<Player> = when (selectedFilter) {
             "Strijelci" -> players.sortedByDescending { it.goals }
             "Asistenti" -> players.sortedByDescending { it.assists }

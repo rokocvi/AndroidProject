@@ -1,17 +1,5 @@
 package hr.ferit.rokocvitkovic.firstproject.ui.theme
 
-import androidx.annotation.DrawableRes
-
-/*data class Player(
-    val firstName: String,
-    val lastName: String,
-    @DrawableRes val iconResId: Int,
-    val position: String,
-    val godina: Int,
-    val goals: Int,
-    val assits: Int,
-    val minutesPlayed: Int
-)*/
 data class Player(
     val firstName: String = "",
     val lastName: String = "",

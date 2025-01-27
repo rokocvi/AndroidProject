@@ -39,6 +39,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
+import hr.ferit.rokocvitkovic.firstproject.ui.theme.ResultsScreen
 import hr.ferit.rokocvitkovic.firstproject.ui.theme.ScheduleScreen
 import hr.ferit.rokocvitkovic.firstproject.ui.theme.ScheduleViewModel
 import hr.ferit.rokocvitkovic.firstproject.ui.theme.TeamViewModel
@@ -276,17 +277,6 @@ fun BottomNavigationButton(
 }
 
 
-
-
-
-
-
-@Composable
-fun ResultsScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "Prikaz Rezultata", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-    }
-}
 
 @Composable
 fun InfoScreen(navController: NavHostController) {
