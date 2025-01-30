@@ -331,7 +331,7 @@ fun InfoScreen(navController: NavHostController) {
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = "Datum osnivanja: 20.07.1971.",
+                    text = "Datum osnivanja: 20.07.1950.",
                     fontSize = 16.sp,
                     color = Color.Black
                 )

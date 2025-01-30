@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,12 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import hr.ferit.rokocvitkovic.firstproject.R
-
 
 
 
@@ -29,12 +31,47 @@ fun PlayersScreen(viewModel: PlayerViewModel) {
 
     var selectedFilter by remember { mutableStateOf("Sve") }
     val filters: List<String> = listOf("Sve", "Strijelci", "Asistenti", "Minutaža")
-
+    var searchQuery by remember { mutableStateOf("") }
+    var showAddPlayerFields by remember { mutableStateOf(false) } // Kontrola prikaza polja
 
     val positionOrder = listOf("Golman", "Obrana", "Vezni", "Napadač")
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    val filteredPlayers = players.filter { player ->
+        player.firstName.contains(searchQuery, ignoreCase = true) ||
+                player.lastName.contains(searchQuery, ignoreCase = true)
+    }
 
+    // Varijable za unos novog igrača
+    var newPlayerName by remember { mutableStateOf("") }
+    var newPlayerPosition by remember { mutableStateOf("") }
+    var newPlayerGoals by remember { mutableStateOf("") }
+    var newPlayerAssists by remember { mutableStateOf("") }
+    var newPlayerMinutes by remember { mutableStateOf("") }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Pretraživač
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                label = { Text("Pretraži igrače") },
+                modifier = Modifier.weight(1f),
+                maxLines = 1
+            )
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo NK Graničar Klakar",
+                modifier = Modifier.size(30.dp)
+            )
+        }
+
+        // Filtriranje igrača i prikaz
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -43,11 +80,6 @@ fun PlayersScreen(viewModel: PlayerViewModel) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Filter:", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo NK Graničar Klakar",
-                modifier = Modifier.size(30.dp)
-            )
             FilterDropdownMenu(
                 selectedFilter = selectedFilter,
                 filters = filters,
@@ -55,24 +87,21 @@ fun PlayersScreen(viewModel: PlayerViewModel) {
             )
         }
 
-
-        val filteredPlayers: List<Player> = when (selectedFilter) {
-            "Strijelci" -> players.sortedByDescending { it.goals }
-            "Asistenti" -> players.sortedByDescending { it.assists }
-            "Minutaža" -> players.sortedByDescending { it.minutesPlayed }
-            else -> players
+        val playersForDisplay: List<Player> = when (selectedFilter) {
+            "Strijelci" -> filteredPlayers.sortedByDescending { it.goals }
+            "Asistenti" -> filteredPlayers.sortedByDescending { it.assists }
+            "Minutaža" -> filteredPlayers.sortedByDescending { it.minutesPlayed }
+            else -> filteredPlayers
         }
 
-        if (selectedFilter == "Sve") {
-            // Grupisanje i prikaz igrača po pozicijama
-            val groupedPlayers = filteredPlayers.groupBy { it.position }
-
-            LazyColumn {
+        LazyColumn(
+            modifier = Modifier.weight(1f) // LazyColumn zauzima preostali prostor
+        ) {
+            if (selectedFilter == "Sve") {
+                val groupedPlayers = playersForDisplay.groupBy { it.position }
                 positionOrder.forEach { position ->
                     val playersInPosition = groupedPlayers[position]
-
                     if (!playersInPosition.isNullOrEmpty()) {
-                        // Naslov za grupu
                         item {
                             Text(
                                 text = position,
@@ -85,23 +114,116 @@ fun PlayersScreen(viewModel: PlayerViewModel) {
                                 color = Color.White
                             )
                         }
-                        // Prikaz igrača u toj poziciji
                         items(playersInPosition.size) { index ->
                             PlayerCard(playersInPosition[index], selectedFilter)
                         }
                     }
                 }
+            } else {
+                items(playersForDisplay.size) { index ->
+                    PlayerCard(playersForDisplay[index], selectedFilter)
+                }
             }
-        } else {
-            // Prikaz igrača samo sortirano (bez grupisanja)
-            LazyColumn {
-                items(filteredPlayers.size) { index ->
-                    PlayerCard(filteredPlayers[index], selectedFilter)
+        }
+
+        // Gumb za prikaz/skrivanje polja za unos novog igrača
+        Button(
+            onClick = { showAddPlayerFields = !showAddPlayerFields },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Text(if (showAddPlayerFields) "Sakrij unos" else "Dodaj novog igrača")
+        }
+
+        // Polja za unos igrača (prikazuju se samo ako je gumb pritisnut)
+        if (showAddPlayerFields) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp) // Unutarnji padding za bolji UI
+            ) {
+                TextField(
+                    value = newPlayerName,
+                    onValueChange = { newPlayerName = it },
+                    label = { Text("Ime i prezime") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                TextField(
+                    value = newPlayerPosition,
+                    onValueChange = { newPlayerPosition = it },
+                    label = { Text("Pozicija") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    TextField(
+                        value = newPlayerGoals,
+                        onValueChange = { newPlayerGoals = it },
+                        label = { Text("Golovi") },
+                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    TextField(
+                        value = newPlayerAssists,
+                        onValueChange = { newPlayerAssists = it },
+                        label = { Text("Asistencije") },
+                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                TextField(
+                    value = newPlayerMinutes,
+                    onValueChange = { newPlayerMinutes = it },
+                    label = { Text("Minute") },
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // Gumb za potvrdu dodavanja igrača
+                Button(
+                    onClick = {
+                        val player = Player(
+                            firstName = newPlayerName.split(" ")[0],
+                            lastName = newPlayerName.split(" ").getOrElse(1) { "" },
+                            godina = 20,
+                            position = newPlayerPosition,
+                            goals = newPlayerGoals.toIntOrNull() ?: 0,
+                            assists = newPlayerAssists.toIntOrNull() ?: 0,
+                            minutesPlayed = newPlayerMinutes.toIntOrNull() ?: 0
+                        )
+                        addPlayerToFirestore(player)
+
+                        // Resetiraj polja nakon dodavanja
+                        newPlayerName = ""
+                        newPlayerPosition = ""
+                        newPlayerGoals = ""
+                        newPlayerAssists = ""
+                        newPlayerMinutes = ""
+                        showAddPlayerFields = false // Sakrij formu nakon dodavanja
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text("Spremi Igrača")
                 }
             }
         }
     }
 }
+
+
+
+
 
 
 @Composable

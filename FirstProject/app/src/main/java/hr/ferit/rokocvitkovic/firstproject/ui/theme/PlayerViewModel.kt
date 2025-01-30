@@ -28,3 +28,19 @@ class PlayerViewModel : ViewModel() {
     }
 }
 
+fun addPlayerToFirestore(player: Player) {
+    val db = FirebaseFirestore.getInstance()
+    val playerRef = db.collection("players")  // Kolekcija 'players' u Firestore
+
+    // Dodavanje novog dokumenta u kolekciju 'players'
+    playerRef.add(player)
+        .addOnSuccessListener {
+            // Ovdje možete obraditi uspješan unos
+            Log.d("Firestore", "Player added successfully!")
+        }
+        .addOnFailureListener { e ->
+            // Ovdje možete obraditi grešku
+            Log.e("Firestore", "Error adding player: $e")
+        }
+}
+
