@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ScheduleViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
-    val scheduleData = mutableStateListOf<MatchSchedule>() // Promjena na MatchSchedule
+    val scheduleData = mutableStateListOf<MatchSchedule>()
 
     init {
         fetchSchedules()
@@ -18,7 +18,7 @@ class ScheduleViewModel : ViewModel() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val schedule = document.toObject(MatchSchedule::class.java) // Promjena na MatchSchedule
+                    val schedule = document.toObject(MatchSchedule::class.java)
                     scheduleData.add(schedule)
                 }
             }

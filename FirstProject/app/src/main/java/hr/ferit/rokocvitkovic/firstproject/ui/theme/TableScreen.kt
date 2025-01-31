@@ -35,7 +35,7 @@ fun TableScreen(viewModel: TeamViewModel) {
     val filters = listOf("Sve", "Doma", "Gosti", "Forma")
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Filter Dropdown
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -54,7 +54,7 @@ fun TableScreen(viewModel: TeamViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Tablica
+
         TableContent(viewModel.teamsData, filter = selectedFilter)
     }
 }
@@ -108,7 +108,7 @@ fun TableContent(teams: List<Team>, filter: String) {
     }
 
     Column {
-        // Header Row
+
         Row(
             Modifier.fillMaxWidth().padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -123,7 +123,7 @@ fun TableContent(teams: List<Team>, filter: String) {
             Text(text = "B", fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
         }
 
-        // Table Rows
+
         filteredTeams.forEachIndexed { index, team ->
             val data = when (filter) {
                 "Doma" -> listOf(

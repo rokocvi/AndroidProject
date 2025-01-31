@@ -7,5 +7,5 @@ data class Player(
     val godina: Int = 0,
     val goals: Int = 0,
     val assists: Int = 0,
-    val minutesPlayed: Int = 0, // URL for the player's image
+    val minutesPlayed: Int = 0,
 )

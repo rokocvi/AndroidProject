@@ -41,7 +41,7 @@ fun ScheduleScreen(viewModel: ScheduleViewModel = viewModel()) {
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Timovi
+
                 Column(
                     modifier = Modifier.weight(2f),
                     verticalArrangement = Arrangement.Center
@@ -54,7 +54,7 @@ fun ScheduleScreen(viewModel: ScheduleViewModel = viewModel()) {
                     )
                 }
 
-                // Datum i vrijeme
+
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center
@@ -71,7 +71,7 @@ fun ScheduleScreen(viewModel: ScheduleViewModel = viewModel()) {
                     )
                 }
 
-                // Lokacija
+
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Center

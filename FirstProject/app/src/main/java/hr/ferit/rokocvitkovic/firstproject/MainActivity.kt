@@ -64,7 +64,7 @@ fun LoadingScreen() {
     var isLoading by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
-        delay(3000) // Simulacija učitavanja
+        delay(3000)
         isLoading = false
     }
 
@@ -92,7 +92,7 @@ fun LoadingScreen() {
             CircularProgressIndicator(color = Color.Blue)
         }
     } else {
-        AppNavigation() // Pokrećemo navigaciju nakon učitavanja
+        AppNavigation()
     }
 }
 
@@ -120,31 +120,31 @@ fun MainScreen(navController: NavHostController) {
                         label = "Početna",
                         isSelected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        iconResId = R.drawable.ic_home // Zamijenite s odgovarajućim ID-om ikone
+                        iconResId = R.drawable.ic_home
                     )
                     BottomNavigationButton(
                         label = "Tablica",
                         isSelected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        iconResId = R.drawable.ic_table // Zamijenite s odgovarajućim ID-om ikone
+                        iconResId = R.drawable.ic_table
                     )
                     BottomNavigationButton(
                         label = "Igrači",
                         isSelected = selectedTab == 2,
                         onClick = { selectedTab = 2 },
-                        iconResId = R.drawable.ic_players // Zamijenite s odgovarajućim ID-om ikone
+                        iconResId = R.drawable.ic_players
                     )
                     BottomNavigationButton(
                         label = "Raspored",
                         isSelected = selectedTab == 3,
                         onClick = { selectedTab = 3 },
-                        iconResId = R.drawable.ic_raspored // Zamijenite s odgovarajućim ID-om ikone
+                        iconResId = R.drawable.ic_raspored
                     )
                     BottomNavigationButton(
                         label = "Rezultati",
                         isSelected = selectedTab == 4,
                         onClick = { selectedTab = 4 },
-                        iconResId = R.drawable.ic_result // Zamijenite s odgovarajućim ID-om ikone
+                        iconResId = R.drawable.ic_result
                     )
 
                 }
@@ -157,7 +157,7 @@ fun MainScreen(navController: NavHostController) {
                     .padding(paddingValues)
             ) {
                 when (selectedTab) {
-                    0 -> HomeScreen(navController) // Prosleđujemo NavController
+                    0 -> HomeScreen(navController)
                     1 -> TableScreen(viewModel = teamViewModel)
                     2 -> PlayersScreen(viewModel = playerViewModel)
                     3 -> ScheduleScreen()
@@ -229,13 +229,13 @@ fun HomeScreen(navController: NavHostController) {
                 contentDescription = "Home Image 1",
                 modifier = Modifier
                     .weight(1f)
-                    .aspectRatio(1.2f) // Lagano povećan omjer za bolji izgled
-                    .offset(x = 12.dp) // Suptilan pomak udesno
-                    .clip(MaterialTheme.shapes.medium) // Zaobljeni rubovi
-                    .background(Color(0xFFE8F5E9)) // Nježnija pozadinska boja
-                    .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium) // Tanki obrub
-                    .shadow(4.dp, shape = MaterialTheme.shapes.medium) // Suptilna sjena
-                    .padding(4.dp) // Manje unutrašnje margine
+                    .aspectRatio(1.2f)
+                    .offset(x = 12.dp)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(Color(0xFFE8F5E9))
+                    .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
+                    .shadow(4.dp, shape = MaterialTheme.shapes.medium)
+                    .padding(4.dp)
             )
         }
 
@@ -265,12 +265,12 @@ fun BottomNavigationButton(
             painter = painterResource(id = iconResId),
             contentDescription = label,
             tint = if (isSelected) Color.Yellow else Color.Unspecified,
-            modifier = Modifier.size(24.dp) // Veličina ikone
+            modifier = Modifier.size(24.dp)
         )
-        Spacer(modifier = Modifier.height(4.dp)) // Razmak između ikone i teksta
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = label,
-            fontSize = 12.sp, // Manji tekst ispod ikone
+            fontSize = 12.sp,
             color = if (isSelected) Color.Yellow else Color.White
         )
     }
@@ -286,29 +286,29 @@ fun InfoScreen(navController: NavHostController) {
             .background(Color.White)
             .padding(16.dp)
     ) {
-        // Strelica za povratak u gornjem desnom kutu
+
         IconButton(
-            onClick = { navController.popBackStack() }, // Povratak na prethodnu stranicu
+            onClick = { navController.popBackStack() },
             modifier = Modifier
-                .align(Alignment.TopEnd) // Pozicioniranje u gornji desni kut
-                .padding(8.dp) // Margina
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.icon_arrow_back), // Zamijenite sa svojom ikonicom
+                painter = painterResource(id = R.drawable.icon_arrow_back),
                 contentDescription = "Povratak",
-                tint = Color.Unspecified, // Boja strelice
-                modifier = Modifier.size(32.dp) // Veličina ikone
+                tint = Color.Unspecified,
+                modifier = Modifier.size(32.dp)
             )
         }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 40.dp), // Dovoljno prostora ispod strelice
+                .padding(top = 40.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ) {
-            // Informacije s ikonama i tekstom
+
             Text(
                 text = "Informacije o klubu",
                 fontSize = 24.sp,
@@ -385,7 +385,7 @@ fun InfoScreen(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun AppNavigation() {
-    val navController = rememberNavController() // Kreiramo NavController unutar funkcije
+    val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "mainScreen") {
         composable("mainScreen") { MainScreen(navController) }
         composable("infoScreen") { InfoScreen(navController) }

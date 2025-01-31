@@ -23,4 +23,3 @@ data class Team(
 )
 
 
-//ime,uk ut, pob,x,por, gr, bod, bod dom, bod gos, utakmice kuci, pobjede kuci, iks, porazi,pob gost,iks,por gost, goal dif home, goal dif gosti

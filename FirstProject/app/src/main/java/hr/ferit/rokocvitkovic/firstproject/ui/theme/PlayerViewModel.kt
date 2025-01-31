@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.text.get
 
 class PlayerViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
@@ -30,17 +31,29 @@ class PlayerViewModel : ViewModel() {
 
 fun addPlayerToFirestore(player: Player) {
     val db = FirebaseFirestore.getInstance()
-    val playerRef = db.collection("players")  // Kolekcija 'players' u Firestore
+    val playerRef = db.collection("players")
 
-    // Dodavanje novog dokumenta u kolekciju 'players'
+
     playerRef.add(player)
         .addOnSuccessListener {
-            // Ovdje možete obraditi uspješan unos
             Log.d("Firestore", "Player added successfully!")
         }
         .addOnFailureListener { e ->
-            // Ovdje možete obraditi grešku
             Log.e("Firestore", "Error adding player: $e")
         }
 }
+
+fun deletePlayerFromFirestore(player: Player) {
+    val db = FirebaseFirestore.getInstance()
+    db.collection("players")
+        .whereEqualTo("firstName", player.firstName)
+        .whereEqualTo("lastName", player.lastName)
+        .get()
+        .addOnSuccessListener { documents ->
+            for (document in documents) {
+                db.collection("players").document(document.id).delete()
+            }
+        }
+}
+
 
