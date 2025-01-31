@@ -32,7 +32,7 @@ import hr.ferit.rokocvitkovic.firstproject.R
 @Composable
 fun TableScreen(viewModel: TeamViewModel) {
     var selectedFilter by remember { mutableStateOf("Sve") }
-    val filters = listOf("Sve", "Doma", "Gosti", "Forma")
+    val filters = listOf("Sve", "Doma", "Gosti")
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
@@ -97,10 +97,7 @@ fun TableContent(teams: List<Team>, filter: String) {
             compareByDescending<Team> { it.awayPoints }
                 .thenByDescending { it.goalDiffAway }
         )
-        "Forma" -> teams.sortedWith(
-            compareByDescending<Team> { it.points }
-                .thenByDescending { it.goalDiff }
-        )
+        
         else -> teams.sortedWith(
             compareByDescending<Team> { it.points }
                 .thenByDescending { it.goalDiff }
