@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -206,42 +207,42 @@ fun HomeScreen(navController: NavHostController) {
                 contentDescription = "Logo NK Graničar Klakar",
                 modifier = Modifier.size(180.dp)
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Text(
                 text = "NK Graničar Klakar",
-                fontSize = 25.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF2C6B4F),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = "Osnovan 1950. godine, NK Graničar Klakar ponosno sudjeluje u lokalnim nogometnim natjecanjima. Klub trenutno igra u 2. županijskoj ligi Brodsko-Posavske županije.",
                 fontSize = 16.sp,
                 color = Color.Gray,
                 modifier = Modifier.padding(horizontal = 20.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                lineHeight = 20.sp
             )
+            Spacer(modifier = Modifier.height(24.dp))
+
             Image(
                 painter = painterResource(id = R.drawable.home1),
                 contentDescription = "Home Image 1",
                 modifier = Modifier
                     .weight(1f)
                     .aspectRatio(1.2f)
-                    .offset(x = 12.dp)
-                    .clip(MaterialTheme.shapes.medium)
-                    .background(Color(0xFFE8F5E9))
-                    .border(1.dp, Color.LightGray, MaterialTheme.shapes.medium)
-                    .shadow(4.dp, shape = MaterialTheme.shapes.medium)
-                    .padding(4.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White)
+                    .border(1.dp, Color.LightGray, RoundedCornerShape(16.dp))
+                    .shadow(8.dp, shape = RoundedCornerShape(16.dp))
             )
         }
-
-
-        }
     }
+}
 
 
 

@@ -97,7 +97,7 @@ fun TableContent(teams: List<Team>, filter: String) {
             compareByDescending<Team> { it.awayPoints }
                 .thenByDescending { it.goalDiffAway }
         )
-        
+
         else -> teams.sortedWith(
             compareByDescending<Team> { it.points }
                 .thenByDescending { it.goalDiff }
